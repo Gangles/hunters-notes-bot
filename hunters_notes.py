@@ -72,7 +72,7 @@ if __name__ == "__main__":
 	# main loop
 	while True:
 		try:
-			# waitToTweet()
+			waitToTweet()
 			postTweet(twitter, getSentence(data))
 		except:
 			logging.exception(sys.exc_info()[0])
