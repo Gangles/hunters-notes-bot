@@ -240,11 +240,11 @@
 		"all"
 	],
 	"conjunctions": [
-		" and ",
-		" but ",
-		" or ",
-		" therefore ",
-		" eventually ",
-		", "
+		"\nand ",
+		"\nbut ",
+		"\nor ",
+		"\ntherefore ",
+		"\neventually ",
+		",\n"
 	]
 }
