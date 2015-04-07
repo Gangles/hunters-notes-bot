@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import config
 import datetime
 import json
@@ -54,7 +56,6 @@ def postTweet(twitter, to_tweet):
     # post the given tweet
     print "Posting tweet: " + to_tweet.encode('ascii', 'ignore')
     twitter.update_status(status=to_tweet)
-    return to_tweet
 
 def waitToTweet():
     # tweet every 4 hours, offset by 1 hours
@@ -66,14 +67,23 @@ def waitToTweet():
     time.sleep(wait)
 
 if __name__ == "__main__":
-	twitter = connectTwitter()
 	data = initJSON()
-
+	twitter = connectTwitter()
+	to_tweet = None
+	
 	# main loop
 	while True:
 		try:
-			waitToTweet()
-			postTweet(twitter, getSentence(data))
+			if not to_tweet:
+				waitToTweet()
+			to_tweet = getSentence(data)
+			postTweet(twitter, to_tweet)
+			to_tweet = None # success!
+		except TwythonError as e:
+			# might be a random error, try again?
+			logging.exception(e)
 		except:
+			# actual error, don't try again
 			logging.exception(sys.exc_info()[0])
-		time.sleep(10)
+			to_tweet = None
+		time.sleep(60)
