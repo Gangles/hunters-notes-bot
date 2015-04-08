@@ -46,7 +46,7 @@ def getClause(data, capital=False):
 def getSentence(data):
 	# assemble clauses into a sentence
 	sentence = getClause(data, True)
-	if random.random() < 0.7:
+	if random.random() < 0.75:
 		sentence += random.choice(data['conjunctions']) + getClause(data)
 	if not sentence.endswith(('.', '!', '?')):
 		sentence += "."
