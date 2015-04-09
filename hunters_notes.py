@@ -9,7 +9,7 @@ import random
 import string
 import sys
 import time
-from twython import Twython
+from twython import Twython, TwythonError
 
 def connectTwitter():
      return Twython(config.twitter_key, config.twitter_secret,
