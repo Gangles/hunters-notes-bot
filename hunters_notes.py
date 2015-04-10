@@ -13,7 +13,8 @@ from twython import Twython, TwythonError
 
 def connectTwitter():
      return Twython(config.twitter_key, config.twitter_secret,
-                    config.access_token, config.access_secret)
+                    config.access_token, config.access_secret,
+                    client_args = {'verify': False})
 
 def initJSON():
     with open("bloodborne.json") as json_file:
@@ -46,7 +47,7 @@ def getClause(data, capital=False):
 def getSentence(data):
 	# assemble clauses into a sentence
 	sentence = getClause(data, True)
-	if random.random() < 0.75:
+	if random.random() < 0.8:
 		sentence += random.choice(data['conjunctions']) + getClause(data)
 	if not sentence.endswith(('.', '!', '?')):
 		sentence += "."
