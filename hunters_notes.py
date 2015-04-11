@@ -14,7 +14,7 @@ from twython import Twython, TwythonError
 def connectTwitter():
      return Twython(config.twitter_key, config.twitter_secret,
                     config.access_token, config.access_secret,
-                    client_args = {'verify': False})
+                    client_args = {'timeout': 30, 'verify': False})
 
 def initJSON():
     with open("bloodborne.json") as json_file:
@@ -87,4 +87,4 @@ if __name__ == "__main__":
 			# actual error, don't try again
 			logging.exception(sys.exc_info()[0])
 			to_tweet = None
-		time.sleep(60)
+		time.sleep(30)
