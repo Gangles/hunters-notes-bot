@@ -58,33 +58,37 @@ def postTweet(twitter, to_tweet):
     print "Posting tweet: " + to_tweet.encode('ascii', 'ignore')
     twitter.update_status(status=to_tweet)
 
-def waitToTweet():
+def timeToWait():
     # tweet every 4 hours, offset by 1 hours
     now = datetime.datetime.now()
     wait = 60 - now.second
     wait += (59 - now.minute) * 60
     wait += (3 - ((now.hour + 1) % 4)) * 3600
-    print "Wait " + str(wait) + " seconds for next tweet"
-    time.sleep(wait)
+    return wait
 
 if __name__ == "__main__":
+	# heroku scheduler runs every 10 minutes
+	wait = timeToWait()
+	print "Wait " + str(wait) + " seconds for next tweet"
+	if wait > 15 * 60:
+		sys.exit(0)
+
 	data = initJSON()
 	twitter = connectTwitter()
 	to_tweet = None
 	
-	# main loop
 	while True:
 		try:
 			if not to_tweet:
-				waitToTweet()
+				time.sleep(wait)
 			to_tweet = getSentence(data)
 			postTweet(twitter, to_tweet)
-			to_tweet = None # success!
+			sys.exit(0) # success!
 		except TwythonError as e:
 			# might be a random error, try again?
 			logging.exception(e)
 		except:
 			# actual error, don't try again
 			logging.exception(sys.exc_info()[0])
-			to_tweet = None
+			sys.exit(1) # error
 		time.sleep(30)
