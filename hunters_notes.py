@@ -70,7 +70,7 @@ if __name__ == "__main__":
 	# heroku scheduler runs every 10 minutes
 	wait = timeToWait()
 	print "Wait " + str(wait) + " seconds for next tweet"
-	if wait > 15 * 60:
+	if wait > 10 * 60:
 		sys.exit(0)
 
 	data = initJSON()
