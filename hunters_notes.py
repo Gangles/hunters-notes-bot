@@ -72,7 +72,7 @@ if __name__ == "__main__":
 	print "Wait " + str(wait) + " seconds for next tweet"
 	if wait > 10 * 60:
 		sys.exit(0)
-
+	
 	data = initJSON()
 	twitter = connectTwitter()
 	to_tweet = None
@@ -95,4 +95,4 @@ if __name__ == "__main__":
 			# actual error, don't try again
 			logging.exception(sys.exc_info()[0])
 			sys.exit(1) # error
-		time.sleep(30)
+		time.sleep(10)
