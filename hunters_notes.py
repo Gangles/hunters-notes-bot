@@ -83,10 +83,14 @@ if __name__ == "__main__":
 				time.sleep(wait)
 			to_tweet = getSentence(data)
 			postTweet(twitter, to_tweet)
+			to_tweet = None
 			sys.exit(0) # success!
 		except TwythonError as e:
 			# might be a random error, try again?
 			logging.exception(e)
+		except SystemExit as e:
+			# working as intended, exit normally
+			sys.exit(e)
 		except:
 			# actual error, don't try again
 			logging.exception(sys.exc_info()[0])
